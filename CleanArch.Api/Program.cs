@@ -1,5 +1,8 @@
+using CleanArch.Application.Interfaces;
+using CleanArch.Application.Services;
 using CleanArch.Domain.Interfaces;
 using CleanArch.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddDbContext<RestaurantDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArch.Application.DTOs
 {
-    public interface CategoryDTO
+    public class CategoryDTO
     {
         public string ? Name { get; set; }
         public string ? ImageUrl { get; set; }

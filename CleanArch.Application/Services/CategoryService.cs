@@ -32,9 +32,27 @@ namespace CleanArch.Application.Services
             await _categoryRepository.AddCategoryAsync(category);
         }
 
-        public IEnumerable<CategoryDTO> GetAllCategories()
+        public async Task<IEnumerable<CategoryDTO>> GetAllCategories() //Mapping
         {
-            throw new NotImplementedException();
+            //var A = await _categoryRepository.GetAllCategoriesAsync();//.ToListAsync();//.Where(x => x.Name.StartsWith("A")).ToList();
+             var Categories = await _categoryRepository.GetAllCategoriesAsync();
+            var CategoriesDto = Categories
+                .Select(x => new CategoryDTO
+                {
+                    Name = x.Name, ImageUrl = x.ImageUrl
+                }).ToList();
+            return CategoriesDto;
+        }
+
+       public async Task<CategoryDTO> GetCategoryByIdAsync(Guid Id)
+        {
+            var Category = await _categoryRepository.GetCategoryByIdAsync(Id);
+            var CategoryDto = new CategoryDTO
+            {
+                Name = Category.Name,
+                ImageUrl = Category.ImageUrl
+            };
+            return CategoryDto;
         }
     }
 }

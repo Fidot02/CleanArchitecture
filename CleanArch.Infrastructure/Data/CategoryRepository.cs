@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,32 @@ namespace CleanArch.Infrastructure.Data
 {
     public class CategoryRepository : ICategoryRepository
     {
-        public Task AddCategoryAsync(Category category)
+        private readonly RestaurantDbContext _context;
+        public CategoryRepository(RestaurantDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public async Task AddCategoryAsync(Category category)
         {
-            throw new NotImplementedException();
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Category> GetCategoryByIdAsync(Guid id)
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            throw new NotImplementedException();
+            
+            return await _context.Categories.ToListAsync();
+        }
+
+        public IQueryable<Category> GetAll()
+        {
+            return  _context.Categories;
+        }
+
+        public async Task<Category> GetCategoryByIdAsync(Guid id)
+        {
+            return await _context.Categories.FindAsync(id);
         }
     }
 }

@@ -33,5 +33,12 @@ namespace CleanArch.Api.Controllers
             return Ok("The category was added successfully!");
 
         }
+
+        [HttpGet("Get-category-by-Id/{id}")]
+        public async Task<IActionResult> GetCategoryById(Guid id)
+        {
+         var Categorydto = await _categoryService.GetCategoryByIdAsync(id);
+            return Ok(Categorydto);
+        }
     }
 }
