@@ -18,9 +18,9 @@ namespace CleanArch.Api.Controllers
 
 
         [HttpGet("Get-all-categories")]
-        public IActionResult GetAllCategories()
+        public async Task<IActionResult> GetAllCategories()
         {
-            var categories = _categoryService.GetAllCategories();
+            var categories = await _categoryService.GetAllCategories();
             return Ok(categories);
         }
 
