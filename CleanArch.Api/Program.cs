@@ -13,9 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<ICategoryService, CategoryService>();
-builder.Services.AddDbContext<RestaurantDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddDbContext<RestaurantDbContext>(x =>
+{
+    x.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    
+    }, ServiceLifetime.Transient);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

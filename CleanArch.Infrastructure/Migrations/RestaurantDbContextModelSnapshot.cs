@@ -38,7 +38,7 @@ namespace CleanArch.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.Item", b =>
@@ -69,7 +69,7 @@ namespace CleanArch.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.Item", b =>

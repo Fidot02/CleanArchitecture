@@ -23,6 +23,7 @@ namespace CleanArch.Infrastructure.Data
             await _context.SaveChangesAsync();
         }
 
+
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
             
