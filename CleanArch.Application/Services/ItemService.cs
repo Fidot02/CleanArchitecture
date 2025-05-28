@@ -22,7 +22,7 @@ namespace CleanArch.Application.Services
         }
 
 
-        public async void AddItem(ItemDTO itemDTO, Guid categoryId)
+        public async Task AddItemAsync(ItemDTO itemDTO, Guid categoryId)
         {   
             //Let us check if this category Id has an associated category 
             //if not lets throw exception 

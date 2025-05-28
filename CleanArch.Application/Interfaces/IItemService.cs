@@ -11,7 +11,7 @@ namespace CleanArch.Application.Interfaces
     {
         Task<IEnumerable<ItemDTO>> GetAllItems();
 
-        void AddItem(ItemDTO itemDTO, Guid categoryId);
+        Task AddItemAsync(ItemDTO itemDTO, Guid categoryId);
 
         Task<ItemDTO> GetItemByIdAsync(Guid id);
 

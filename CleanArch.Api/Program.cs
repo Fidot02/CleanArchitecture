@@ -17,12 +17,12 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddDbContext<RestaurantDbContext>(x =>
-{
-    x.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-    
-    }, ServiceLifetime.Transient);
+//builder.Services.AddDbContext<RestaurantDbContext>(x =>
+//{
+//    x.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 
+//    }, ServiceLifetime.Transient);
+builder.Services.AddDbContext<RestaurantDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

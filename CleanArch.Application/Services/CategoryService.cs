@@ -20,7 +20,7 @@ namespace CleanArch.Application.Services
                 _categoryRepository = categoryRepository;
         }
 
-        public async void AddCategory(CategoryDTO categoryDTO)
+        public async Task AddCategoryAsync(CategoryDTO categoryDTO)
         {
             var category = new Category
             {

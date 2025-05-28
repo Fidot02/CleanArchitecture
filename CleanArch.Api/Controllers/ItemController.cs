@@ -24,9 +24,9 @@ namespace CleanArch.Api.Controllers
         }
 
         [HttpPost("Add-Item")]
-        public IActionResult AddItem(Guid categoryId,[FromBody] ItemDTO itemDTO)
+        public async Task<IActionResult> AddItemAsync(Guid categoryId,[FromBody] ItemDTO itemDTO)
         {
-            _itemService.AddItem(itemDTO,categoryId);
+            await _itemService.AddItemAsync(itemDTO,categoryId);
             return Ok("Item was added successfully");
         }
         

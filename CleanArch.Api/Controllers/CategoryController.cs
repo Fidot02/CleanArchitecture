@@ -26,10 +26,10 @@ namespace CleanArch.Api.Controllers
 
 
         [HttpPost("Add-category")]
-        public IActionResult AddCategory([FromBody] CategoryDTO categoryDTO)
+        public async Task<IActionResult> AddCategoryAsync([FromBody] CategoryDTO categoryDTO)
         {
 
-            _categoryService.AddCategory(categoryDTO);
+            await _categoryService.AddCategoryAsync(categoryDTO);
             return Ok("The category was added successfully!");
 
         }
