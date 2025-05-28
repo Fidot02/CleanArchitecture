@@ -3,6 +3,7 @@ using CleanArch.Application.Services;
 using CleanArch.Domain.Interfaces;
 using CleanArch.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Host.UseSerilog((context,services,configuration) => 
+{ 
+    configuration.ReadFrom.Configuration(context.Configuration).ReadFrom.Services(services).Enrich.FromLogContext();
+});
 //builder.Services.AddDbContext<RestaurantDbContext>(x =>
 //{
 //    x.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
@@ -31,6 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseSerilogRequestLogging();
 
 app.UseAuthorization();
 

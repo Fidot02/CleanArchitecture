@@ -7,6 +7,7 @@ using CleanArch.Application.Interfaces;
 using CleanArch.Application.DTOs;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
 
 
 namespace CleanArch.Application.Services
@@ -15,33 +16,43 @@ namespace CleanArch.Application.Services
     {
         private readonly IItemRepository _itemRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public ItemService(IItemRepository itemRepository,ICategoryRepository categoryRepository)
+        private readonly ILogger<ItemService> _logger;
+        public ItemService(IItemRepository itemRepository, ICategoryRepository categoryRepository, ILogger<ItemService> logger)
         {
             _itemRepository = itemRepository;
             _categoryRepository = categoryRepository;
+            _logger = logger;
         }
 
 
         public async Task AddItemAsync(ItemDTO itemDTO, Guid categoryId)
-        {   
-            //Let us check if this category Id has an associated category 
-            //if not lets throw exception 
-            var category = _categoryRepository.GetCategoryByIdAsync(categoryId);
-            if (category == null)
+        {
+            try
             {
-                throw new ArgumentException();
-            }
-            var item = new Item
-            {
-                Id = Guid.NewGuid(),
-                Name = itemDTO.Name,
-                ImageUrl = itemDTO.ImageUrl,
-                Description = itemDTO.Description,
-                Price = itemDTO.Price, 
-                CategoryId = categoryId
-            };
+                //Let us check if this category Id has an associated category 
+                //if not lets throw exception 
+                var category = await _categoryRepository.GetCategoryByIdAsync(categoryId);
+                if (category == null)
+                {
+                    throw new ArgumentException();
+                }
+                var item = new Item
+                {
+                    Id = Guid.NewGuid(),
+                    Name = itemDTO.Name,
+                    ImageUrl = itemDTO.ImageUrl,
+                    Description = itemDTO.Description,
+                    Price = itemDTO.Price,
+                    CategoryId = categoryId
+                };
 
-            await _itemRepository.AddItemAsync(item);
+                await _itemRepository.AddItemAsync(item);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"ERROR: {ex.Message} STACKTRACE: {ex.StackTrace} ");
+                return;
+            }
         }
 
 
