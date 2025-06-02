@@ -55,6 +55,7 @@ namespace CleanArch.Application.Services
             }
         }
 
+       
 
         public async Task<IEnumerable<ItemDTO>> GetAllItems()
         {
@@ -83,6 +84,31 @@ namespace CleanArch.Application.Services
                 Price = Item.Price
             };
             return ItemDTO;
+        }
+
+        public async Task ReplaceItemByIdAsync(Guid id, Guid categoryId, ItemDTO updatedItemDTO)
+        {
+            var category = await _categoryRepository.GetCategoryByIdAsync(categoryId);
+            if (category == null)
+            {
+                throw new ArgumentException();
+            }
+            var updatedItem = new Item
+            {
+                Id = Guid.NewGuid(),
+                Name = updatedItemDTO.Name,
+                ImageUrl = updatedItemDTO.ImageUrl,
+                Description = updatedItemDTO.Description,
+                Price = updatedItemDTO.Price,
+                CategoryId = categoryId
+            };
+
+            await _itemRepository.ReplaceItemByIdAsync(id, updatedItem);
+        }
+
+        public async Task DeleteItemByIdAsync(Guid id)
+        {
+           await _itemRepository.DeleteItemByIdAsync(id); 
         }
     }
 }

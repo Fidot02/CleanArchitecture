@@ -9,9 +9,12 @@ namespace CleanArch.Application.Interfaces
 {
     public interface ICategoryService
     {
-        public Task<IEnumerable<CategoryDTO>> GetAllCategories();
-        public Task AddCategoryAsync(CategoryDTO categoryDTO);
+        Task<IEnumerable<CategoryDTO>> GetAllCategories();
+        Task AddCategoryAsync(CategoryDTO categoryDTO);
 
         Task<CategoryDTO> GetCategoryByIdAsync(Guid Id);
+        Task ReplaceCategoryByIdAsync(Guid id, CategoryDTO updatedCategoryDTO);
+
+        Task DeleteCategoryByIdAsync(Guid id);
     }
 }

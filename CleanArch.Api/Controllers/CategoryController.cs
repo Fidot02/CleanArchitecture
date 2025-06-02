@@ -1,5 +1,6 @@
 ﻿using CleanArch.Application.DTOs;
 using CleanArch.Application.Interfaces;
+using CleanArch.Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +40,21 @@ namespace CleanArch.Api.Controllers
         {
          var Categorydto = await _categoryService.GetCategoryByIdAsync(id);
             return Ok(Categorydto);
+        }
+
+        [HttpPut("Replace-Category-by-Id")]
+        public async Task<IActionResult> ReplaceCategoryByIdAsync(Guid id , [FromBody] CategoryDTO updatedCategoryDTO)
+        {
+           await _categoryService.ReplaceCategoryByIdAsync(id, updatedCategoryDTO);
+             return Ok("Category successfully Replaced");
+        }
+
+
+        [HttpDelete("Delete-Category-by-Id")]
+        public async Task<IActionResult> DeleteCategoryByIdAsync(Guid id)
+        {
+            await _categoryService.DeleteCategoryByIdAsync(id);
+            return Ok("Category has been deleted");
         }
     }
 }

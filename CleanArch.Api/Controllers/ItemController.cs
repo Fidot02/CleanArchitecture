@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CleanArch.Application.Interfaces;
 using CleanArch.Application.DTOs;
+using CleanArch.Application.Services;
 
 
 namespace CleanArch.Api.Controllers
@@ -36,8 +37,21 @@ namespace CleanArch.Api.Controllers
             var Itemdto = await _itemService.GetItemByIdAsync(id);
             return Ok(Itemdto);
         }
+
+        [HttpPut("Replace-Item-by-Id")]
+        public async Task<IActionResult> ReplaceItemByIdAsync(Guid id, Guid categoryId, [FromBody] ItemDTO updatedItemDTO )
+        {
+            await _itemService.ReplaceItemByIdAsync(id, categoryId ,updatedItemDTO);
+            return Ok("Item successfully Replaced");
+        }
+
+        [HttpDelete("Delete-Item-by-Id")]
+        public async Task<IActionResult> DeleteItemByIdAsync(Guid id)
+        {
+            await _itemService.DeleteItemByIdAsync(id);
+            return Ok("Item has been deleted");
+        }
     }
 
         
-
-    }
+}

@@ -3,6 +3,7 @@ using CleanArch.Application.Interfaces;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
 using CleanArch.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace CleanArch.Application.Services
             await _categoryRepository.AddCategoryAsync(category);
         }
 
+       
         public async Task<IEnumerable<CategoryDTO>> GetAllCategories() //Mapping
         {
             //var A = await _categoryRepository.GetAllCategoriesAsync();//.ToListAsync();//.Where(x => x.Name.StartsWith("A")).ToList();
@@ -54,5 +56,27 @@ namespace CleanArch.Application.Services
             };
             return CategoryDto;
         }
+
+
+
+        public async Task ReplaceCategoryByIdAsync(Guid id, CategoryDTO updatedCategoryDTO)
+        {
+            var updatedCategory = new Category
+            {
+                ImageUrl = updatedCategoryDTO.ImageUrl,
+                Name = updatedCategoryDTO.Name,
+                Id = Guid.NewGuid()
+            };
+
+            await _categoryRepository.ReplaceCategoryByIdAsync(id, updatedCategory);
+        }
+
+        public async Task DeleteCategoryByIdAsync(Guid id)
+        {
+            await _categoryRepository.DeleteCategoryByIdAsync(id);
+        }
+
+
+
     }
 }

@@ -16,5 +16,9 @@ namespace CleanArch.Domain.Interfaces
         Task<Item> GetItemByIdAsync(Guid id);
 
         IQueryable<Item> GetAll();
+
+        Task ReplaceItemByIdAsync(Guid id, Item updatedItemDTO);
+
+        Task DeleteItemByIdAsync(Guid id);
     }
 }

@@ -39,5 +39,39 @@ namespace CleanArch.Infrastructure.Data
         {
             return await _context.Categories.FindAsync(id);
         }
+
+        public async Task ReplaceCategoryByIdAsync(Guid id, Category updatedCategory)
+        {
+
+            var identity = await GetCategoryByIdAsync(id);
+
+            if (identity == null)
+            {
+                throw new InvalidOperationException("Category not found");
+            }
+            
+            identity.Name = updatedCategory.Name;
+            identity.ImageUrl = updatedCategory.ImageUrl;
+           
+            
+
+
+             await _context.SaveChangesAsync();
+
+            
+
+        }
+
+        public async Task DeleteCategoryByIdAsync(Guid id)
+        {
+            var existingCategory = await _context.Categories.FindAsync(id);
+            if (existingCategory == null)
+            {
+                throw new InvalidOperationException("Category does not exist");
+            }
+            
+            _context.Categories.Remove(existingCategory);
+            await _context.SaveChangesAsync();
+        }
     }
 }
